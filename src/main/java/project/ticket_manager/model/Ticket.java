@@ -19,15 +19,11 @@ public class Ticket {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
-    private int numberOfPeople;
-    private int price;
+    private Integer numberOfPeople;
+    private Integer price;
+    private String code;
     @CreationTimestamp
     private LocalDateTime createdOn;
     @UpdateTimestamp
     private LocalDateTime updatedOn;
-
-    @ManyToOne
-    @JoinColumn(name = "created_by", nullable = false)
-    private UserEntity createdBy;
-
 }

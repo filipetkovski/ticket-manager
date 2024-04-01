@@ -6,6 +6,12 @@
     <meta charset="UTF-8">
     <title>Ticket Manager</title>
     <link th:href="@{/css/styles.css}" rel="stylesheet">
+    <style>
+        body {
+            background-image: url('https://i.redd.it/vmr1duur97h61.jpg');
+            background-size: cover;
+        }
+    </style>
 </head>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container px-5">
@@ -14,15 +20,28 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                 <li sec:authorize="isAuthenticated()" class="nav-item"><a class="nav-link" th:href="@{/ticket/create}">Create a Ticket</a></li>
-                <li sec:authorize="!isAuthenticated()" class="nav-item"><a class="nav-link" th:href="@{/login}">Login</a></li>
-                <li sec:authorize="hasRole('ROLE_ADMIN')" class="nav-item"><a class="nav-link" th:href="@{/register}">Register</a></li>
+<!--                <li sec:authorize="!isAuthenticated()" class="nav-item"><a class="nav-link" th:href="@{/login}">Login</a></li>-->
+                <li sec:authorize="hasRole('ROLE_ADMIN')"  class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdownBlog" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">User Manager</a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownBlog">
+                        <li ><a class="dropdown-item" th:href="@{/register}">Register User</a></li>
+                        <li ><a class="dropdown-item" th:href="@{/user/manager}">Edit User</a></li>
+                    </ul>
+                </li>
                 <li sec:authorize="isAuthenticated()"  class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" id="navbarDropdownBlog" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Reports</a>
+                    <a class="nav-link dropdown-toggle" id="navbarDropdownBlo1" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Reports</a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownBlog">
                         <li><a class="dropdown-item" th:href="@{/daily/tickets}">Today</a></li>
                         <li sec:authorize="hasRole('ROLE_ADMIN')"><a class="dropdown-item" th:href="@{/perday/tickets}">Per Day</a></li>
                         <li sec:authorize="hasRole('ROLE_ADMIN')"><a class="dropdown-item" th:href="@{/permonth/tickets}">Per Month</a></li>
                         <li sec:authorize="hasRole('ROLE_ADMIN')"><a class="dropdown-item" th:href="@{/peryear/tickets}">Per Year</a></li>
+                    </ul>
+                </li>
+                <li sec:authorize="hasRole('ROLE_ADMIN')"  class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdownBlog2" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Settings</a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownBlog">
+                        <li><a class="dropdown-item" th:href="@{/ticket/code}">Find Ticket</a></li>
+                        <li><a class="dropdown-item" th:href="@{/ticket/price}">Change Price</a></li>
                     </ul>
                 </li>
                 <li sec:authorize="isAuthenticated()" class="nav-item"><a class="nav-link" th:href="@{/logout}">Logout</a></li>

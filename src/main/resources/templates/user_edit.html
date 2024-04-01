@@ -19,7 +19,7 @@
 
         <div class="container" sec:authorize="!hasRole('ROLE_ADMIN')">
             <div class="alert alert-success">
-                You do not have permission to register!
+                You do not have permission to edit a user!
             </div>
         </div>
 
@@ -27,7 +27,7 @@
             <div th:if="${param.fail}" class="alert alert-success">
                 Username or email already exist!
             </div>
-            <form id="form" class="needs-validation" role="form" method="post" th:action="@{/register/save}" th:object="${user}" >
+            <form id="form" class="needs-validation" role="form" method="post" th:action="@{/user/{userId}/edit(userId=${user.Id})}" th:object="${user}" >
                 <div class="mb-2">
                     <div class="mb-2">
                         <label for="username" class="h5">Username</label>
@@ -43,7 +43,7 @@
                     </div>
                 </div>
                 <p th:if="${#fields.hasErrors('password')}" class="text-danger"></p>
-                <button th:href="@{/register}" class="btn btn-primary mt-3" type="submit">Register A User</button>
+                <button th:href="@{/register}" class="btn btn-primary mt-3" type="submit">Edit A User</button>
             </form>
         </div>
     </section>

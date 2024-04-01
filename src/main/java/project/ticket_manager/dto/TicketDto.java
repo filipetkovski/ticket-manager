@@ -10,9 +10,9 @@ import java.time.LocalDateTime;
 @Builder
 public class TicketDto {
     private Long Id;
-    private int numberOfPeople;
-    private int price;
+    private Integer numberOfPeople;
+    private Integer price;
+    private String code;
     private LocalDateTime createdOn;
     private LocalDateTime updatedOn;
-    private UserEntity createdBy;
 }

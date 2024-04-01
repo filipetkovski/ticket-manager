@@ -18,33 +18,36 @@
 </head>
 <body>
 <section layout:fragment="body" class="py-5">
-    <div class="container" sec:authorize="!isAuthenticated()">
+    <div class="container" sec:authorize="!hasRole('ROLE_ADMIN')">
         <div class="alert alert-success">
-            You do not have permission to view the reports!
+            You do not have permission to view the users!
         </div>
     </div>
-    <div class="container px-5 my-5" sec:authorize="isAuthenticated()">
+    <div class="container px-5 my-5" sec:authorize="hasRole('ROLE_ADMIN')">
+        <div th:if="${param.success}" class="alert alert-success">
+            You successfuly edit a user
+        </div>
         <div class="text-center mb-5">
-            <h1 class="fw-bolder">Per Year Tickets</h1>
+            <h1 class="fw-bolder">Users</h1>
         </div>
 
         <table class="table table-striped">
             <thead>
             <tr>
                 <th scope="col">Id</th>
-                <th scope="col">People</th>
-                <th scope="col">Price</th>
-                <th scope="col">Update</th>
+                <th scope="col">Username</th>
+                <th scope="col">User Email</th>
+                <th scope="col"></th>
                 <th scope="col"></th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="ticket :${tickets}">
-                <th scope="row" th:text="${ticket.Id}"></th>
-                <td th:text="${ticket.numberOfPeople}"></td>
-                <td th:text="${ticket.price}"></td>
-                <td th:text="${#temporals.format(ticket.updatedOn, 'dd MMMM yyyy HH:mm')}"></td>
-                <td><a class="btn btn-primary" type="submit" th:href="@{/peryear/ticket/{ticketId}/delete(ticketId=${ticket.Id})}">Delete</a></td>
+            <tr th:each="user :${users}">
+                <th scope="row" th:text="${user.Id}"></th>
+                <td th:text="${user.username}"></td>
+                <td th:text="${user.email}"></td>
+                <td><a class="btn btn-primary" type="submit" th:href="@{/user/{userId}/edit(userId=${user.Id})}">Edit</a></td>
+                <td><a class="btn btn-primary" type="submit" th:href="@{/user/{userId}/delete(userId=${user.Id})}">Delete</a></td>
             </tr>
             </tbody>
         </table>

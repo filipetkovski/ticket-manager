@@ -1,9 +1,9 @@
 package project.ticket_manager.mapping;
 
-import project.ticket_manager.dto.TicketDto;
 import project.ticket_manager.dto.TicketPerDayDto;
-import project.ticket_manager.model.Ticket;
 import project.ticket_manager.model.TicketPerDay;
+
+import java.util.Optional;
 
 public class TicketPerDayMapping {
 

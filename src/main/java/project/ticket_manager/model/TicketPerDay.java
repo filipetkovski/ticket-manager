@@ -20,8 +20,8 @@ public class TicketPerDay {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
-    private int numberOfPeople;
-    private int price;
+    private Integer numberOfPeople;
+    private Integer price;
     @CreationTimestamp
     private LocalDateTime createdOn;
     @UpdateTimestamp

@@ -12,7 +12,7 @@ public class TicketMapping {
                 .numberOfPeople(ticketDto.getNumberOfPeople())
                 .price(ticketDto.getPrice())
                 .updatedOn(ticketDto.getUpdatedOn())
-                .createdBy(ticketDto.getCreatedBy())
+                .code(ticketDto.getCode())
                 .build();
         return ticket;
     }
@@ -24,7 +24,7 @@ public class TicketMapping {
                 .numberOfPeople(ticket.getNumberOfPeople())
                 .price(ticket.getPrice())
                 .updatedOn(ticket.getUpdatedOn())
-                .createdBy(ticket.getCreatedBy())
+                .code(ticket.getCode())
                 .build();
         return ticketDto;
     }

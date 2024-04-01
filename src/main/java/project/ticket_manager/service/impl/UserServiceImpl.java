@@ -1,5 +1,6 @@
 package project.ticket_manager.service.impl;
 
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import project.ticket_manager.dto.RegistrationDto;
@@ -9,7 +10,10 @@ import project.ticket_manager.repository.RoleRepository;
 import project.ticket_manager.repository.UserRepository;
 import project.ticket_manager.service.UserService;
 
+import javax.persistence.EntityManager;
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -42,5 +46,37 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserEntity findByUsername(String username) {
         return userRepository.findByUsername(username);
+    }
+
+    @Override
+    public List<UserEntity> findAll() {
+        return userRepository.findAll().stream()
+                .filter(user -> user.getRoles().stream().anyMatch(role -> "ROLE_USER".equals(role.getName())))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public void deleteById(Long userId) {
+        UserEntity user = userRepository.getById(userId);
+        Role role = roleRepository.getReferenceById(Long.valueOf(1));
+        user.getRoles().remove(role);
+        userRepository.deleteById(userId);
+    }
+
+    @Override
+    public void save(RegistrationDto registrationDto) {
+        UserEntity userEntity = new UserEntity();
+        userEntity.setId(registrationDto.getId());
+        userEntity.setUsername(registrationDto.getUsername());
+        userEntity.setEmail(registrationDto.getEmail());
+        userEntity.setPassword(passwordEncoder.encode(registrationDto.getPassword()));
+        Role role = roleRepository.findByName("ROLE_USER");
+        userEntity.setRoles(Arrays.asList(role));
+        userRepository.save(userEntity);
+    }
+
+    @Override
+    public UserEntity findById(Long userId) {
+        return userRepository.getReferenceById(userId);
     }
 }

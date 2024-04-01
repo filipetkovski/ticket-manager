@@ -8,8 +8,8 @@ import java.time.LocalDateTime;
 @Builder
 public class TicketPerDayDto {
     private Long Id;
-    private int numberOfPeople;
-    private int price;
+    private Integer numberOfPeople;
+    private Integer price;
     private LocalDateTime createdOn;
     private LocalDateTime updatedOn;
 }

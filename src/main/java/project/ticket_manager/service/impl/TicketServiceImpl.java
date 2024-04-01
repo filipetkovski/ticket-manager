@@ -12,9 +12,9 @@ import project.ticket_manager.service.TicketService;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 
-import static project.ticket_manager.mapping.TicketMapping.mapToTicket;
 import static project.ticket_manager.mapping.TicketMapping.mapToTicketDto;
 
 
@@ -36,9 +36,12 @@ public class TicketServiceImpl implements TicketService {
 
     @Override
     public void save(Ticket ticket) {
-        String username = SecurityUtil.getSessionUser();
-        UserEntity user = userRepository.findByEmail(username);
-        ticket.setCreatedBy(user);
+        LocalDateTime localDateTime = LocalDateTime.now();
+        String code = localDateTime.getYear() + "" + localDateTime.getDayOfMonth() + "" + localDateTime.getHour() + "" + localDateTime.getMinute() + "" + localDateTime.getSecond();
+        while(code.length() != 12) {
+            code += "0";
+        }
+        ticket.setCode(code);
         ticketRepository.save(ticket);
     }
 
@@ -51,5 +54,34 @@ public class TicketServiceImpl implements TicketService {
     public List<TicketDto> findAll() {
         List<Ticket> tickets = ticketRepository.findAll();
         return tickets.stream().map((ticket) -> mapToTicketDto(ticket)).collect(Collectors.toList());
+    }
+
+    @Override
+    public void deleteByDate(LocalDateTime createdOn) {
+        List<Ticket> tickets = ticketRepository.findByCreatedOn(createdOn);
+        tickets.stream().forEach(ticket -> ticketRepository.deleteById(ticket.getId()));
+    }
+
+    @Override
+    public void deleteByMonth(LocalDateTime createdOn) {
+        List<Ticket> tickets = ticketRepository.findByMonth(createdOn);
+        tickets.stream().forEach(ticket -> ticketRepository.deleteById(ticket.getId()));
+    }
+
+    @Override
+    public void deleteByYear(LocalDateTime createdOn) {
+        List<Ticket> tickets = ticketRepository.findByYear(createdOn);
+        tickets.stream().forEach(ticket -> ticketRepository.deleteById(ticket.getId()));
+
+    }
+
+    @Override
+    public Ticket getById(Long ticketId) {
+        return ticketRepository.getById(ticketId);
+    }
+
+    @Override
+    public Ticket findByCode(String code) {
+        return ticketRepository.findByCode(code);
     }
 }

@@ -15,4 +15,14 @@ public interface TicketService {
     void deleteWithId(Long ticketId);
 
     List<TicketDto> findAll();
+
+    void deleteByDate(LocalDateTime updatedOn);
+
+    void deleteByMonth(LocalDateTime createdOn);
+
+    void deleteByYear(LocalDateTime createdOn);
+
+    Ticket getById(Long ticketId);
+
+    Ticket findByCode(String code);
 }
